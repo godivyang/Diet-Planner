@@ -20,4 +20,4 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_THEAWAKENING_ZG }}'
-          projectId: diet-planner
+          projectId: theawakening-zg
