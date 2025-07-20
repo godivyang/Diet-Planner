@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "diet-planner"
+    "default": "theawakening-zg"
+  },
+  "targets": {
+    "theawakening-zg": {
+      "hosting": {
+        "diet-planner": [
+          "default"
+        ]
+      }
+    }
   }
 }
