@@ -1,0 +1,74 @@
+"use client"
+
+import * as React from "react"
+import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
+
+import { cn } from "../../../lib/utils"
+import { Button } from "./Button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "./Command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "./Popover"
+
+export function Combobox({data, onChange}) {
+  const [open, setOpen] = React.useState(false)
+  const [selected, setSelected] = React.useState(Array<string>())
+
+  React.useEffect(() => {
+    onChange(selected);
+  }, [selected])
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min justify-between">
+          {selected.length ? selected.join(", ") : "Select names..."}
+          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="min-w-min p-0">
+        <Command>
+          <CommandInput placeholder="Search name..." />
+          <CommandList>
+            <CommandEmpty>No name found.</CommandEmpty>
+            <CommandGroup>
+              {data.map((d) => (
+                <CommandItem
+                  key={d._id}
+                  value={d.name}
+                  onSelect={(currentValue) => {
+                    console.log(currentValue)
+                    if(selected.includes(currentValue)) {
+                      selected.splice(selected.indexOf(currentValue), 1);
+                    } else {
+                      selected.push(currentValue);
+                    }
+                    setSelected([...selected]);
+                    // setOpen(false)
+                  }}
+                >
+                  <CheckIcon
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      selected.includes(d.name) ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {d.name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  )
+}
