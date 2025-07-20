@@ -5,9 +5,6 @@
   "targets": {
     "theawakening-zg": {
       "hosting": {
-        "Diet-Planner": [
-          "Diet-Planner"
-        ],
         "diet-planner": [
           "diet-planner"
         ]
