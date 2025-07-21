@@ -11,6 +11,6 @@ export default defineConfig({
   },
   plugins: [pluginReact()],
   html: {
-    title: "Diet Planner"
-  }
+    template: './public/index.html',
+  },
 });
