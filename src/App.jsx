@@ -11,7 +11,6 @@ const App = () => {
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
-        if(userName) return;
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
@@ -43,7 +42,7 @@ const App = () => {
         });
     }, [])
 
-    return (
+    return (userName ? 
         <Routes>
             <Route path="/" element={<LandingPage userName={userName}/>}>
                 <Route index element={<HomePage />} />
@@ -51,6 +50,8 @@ const App = () => {
                 <Route path="preview" element={<Preview />} />
             </Route>
         </Routes>
+        :
+        <div>Please wait while we are logging you in...</div>
     );
 };
 
