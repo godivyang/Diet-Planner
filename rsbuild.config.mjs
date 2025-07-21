@@ -7,6 +7,7 @@ export default defineConfig({
     define: {
       ...publicVars
     },
+    publicDir: 'public',
   },
   plugins: [pluginReact()],
   html: {
