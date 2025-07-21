@@ -6,7 +6,7 @@
     
     <!-- manual imports for downloading the app on mobile -->
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#000000" />
     
     <title>Welcome to Firebase Hosting</title>
 
@@ -89,15 +89,6 @@
           loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
         }
       });
-
-      // added service worker manually for app download on mobile
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service worker registered:', reg))
-            .catch(err => console.log('Service worker registration failed:', err));
-        });
-      }
 
     </script>
   </body>
