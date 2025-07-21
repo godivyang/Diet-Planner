@@ -1,7 +1,7 @@
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "../components/ui/Card"
 import { Label } from "../components/ui/Label"
 import { useLocation, useNavigate } from "react-router"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../components/ui/Button"
 import { ArrowLeft, Check, Key } from "lucide-react"
 import { addDiet } from "../api/DietPlanner"
@@ -69,7 +69,7 @@ const Preview = () => {
     }
 
     const onCopyButtonClick = () => {
-        // localStorage.removeItem("Diet-Planner-Diet");
+        localStorage.removeItem("Diet-Planner-Diet");
         if(!copiedSuccessfully) {
             addDiet(diets);
         }
