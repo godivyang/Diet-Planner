@@ -36,7 +36,7 @@ const Preview = () => {
         let re = diets[names[0]] && diets[names[0]].map(_ => emojis[Math.floor(Math.random() * emojis.length)]);
         setRandomEmojis(re || []);
         let ct = "";
-        ct += "'''" + names.join(", ") + "'''\n";
+        ct += "```" + names.join(", ") + "```\n";
         ct += "*" + date.toDateString() + "*\n";
         if(names.length) {
             diets[names[0]].forEach((_,i) => {
@@ -55,7 +55,7 @@ const Preview = () => {
                     if(diets[name][i].length === 0 || diets[name][i].length === 1 && diets[name][i][0] === "") {
                         return undefined;
                     }
-                    if(names.length > 1) ct += "'''" + name + "'''\n";
+                    if(names.length > 1) ct += "```" + name + "```\n";
                     ct += "• " + diets[name][i].join("\n• ") + "\n";
                 });
             });

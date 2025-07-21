@@ -15,7 +15,7 @@ const HomePage = () => {
     const [names, setNames] = useState([]);
     const [allNames, setAllNames] = useState([]);
     const [date, setDate] = useState(new Date());
-    const [addNewNameVisible, setAddNewNameVisible] = useState(false);
+    const [addNewNameVisible, setAddNewNameVisible] = useState(true);
 
     const [newName, setNewName] = useState("");
 
