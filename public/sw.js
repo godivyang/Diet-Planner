@@ -1,9 +1,12 @@
-self.addEventListener('install', function (e) {
-  console.log('[ServiceWorker] Install');
-  e.waitUntil(self.skipWaiting()); // Activate immediately
+// sw.js
+self.addEventListener('install', (event) => {
+  console.log('Service Worker: Installed');
 });
 
-self.addEventListener('activate', function (e) {
-  console.log('[ServiceWorker] Activate');
-  return self.clients.claim();
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker: Activated');
+});
+
+self.addEventListener('fetch', (event) => {
+  // Optionally intercept requests
 });
