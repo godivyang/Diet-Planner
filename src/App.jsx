@@ -11,6 +11,7 @@ const App = () => {
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
+        if(userName) return;
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
