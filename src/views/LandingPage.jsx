@@ -1,21 +1,35 @@
 import H1 from "../components/ui/H1";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/ui/Button";
 import { Moon, Sun } from "lucide-react";
 import { Outlet, useNavigate } from "react-router";
 
 const LandingPage = ({ userName }) => {
     const [theme, setTheme] = useState("");
+
+    useEffect(() => {
+        let userTheme = localStorage.getItem("userTheme");
+        if(!userTheme) {
+            if(!root.classList.contains("dark")) changeTheme({theme:"dark"});
+            setTheme("dark");
+            localStorage.setItem("userTheme", "dark");
+        } else {
+            if(!root.classList.contains(userTheme)) changeTheme({theme:userTheme});
+            setTheme(userTheme);
+        }
+    }, []);
     
-    const changeTheme = () => {
+    const changeTheme = ({theme}) => {
         const root = document.documentElement;
         root.classList.add("disable-transitions");
 
         setTheme(theme === "dark" ? "light" : "dark");
-        if (root.classList.contains("dark")) {
+        if (theme === "light" || (!theme && root.classList.contains("dark"))) {
             root.classList.remove("dark");
+            localStorage.setItem("userTheme", "light");
         } else {
             root.classList.add("dark");
+            localStorage.setItem("userTheme", "dark");
         }
 
         setTimeout(() => {
@@ -28,7 +42,7 @@ const LandingPage = ({ userName }) => {
         <div className="flex w-full p-1">
             <H1 text="Diet Planner" />
             <span className="flex-1"/>
-            <span className="me-2 font-bold">Welcome {userName}!</span>
+            {userName && <Button className="text-lg">{userName}</Button>}
             <Button variant="outline" onClick={changeTheme} size="icon">
                 {theme === "dark" ? <Sun/> : <Moon/>}
             </Button>

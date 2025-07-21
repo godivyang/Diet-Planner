@@ -56,7 +56,7 @@ const Preview = () => {
                         return undefined;
                     }
                     if(names.length > 1) ct += "```" + name + "```\n";
-                    ct += "• " + diets[name][i].join("\n• ") + "\n";
+                    ct += "• " + diets[name][i].filter(d => d.trim()).join("\n• ") + "\n";
                 });
             });
         }
@@ -84,10 +84,10 @@ const Preview = () => {
         <CardTitle>
             <div className="mx-2 flex gap-2">
                 <Button variant="outline" onClick={onBackButtonClick}><ArrowLeft/></Button>
-                <Label>Diet Preview</Label>
+                <Label className="text-2xl font-bold">Diet Preview</Label>
             </div>
         </CardTitle>
-        <CardContent className="flex flex-col w-full m-2">
+        <CardContent className="flex flex-col w-full m-2 text-sm">
             <strong>{names.join(", ")}</strong>
             <strong>{date.toDateString()}</strong>
             {names.length && diets[names[0]].map((diet, i) => {
@@ -115,7 +115,7 @@ const Preview = () => {
                         <div className="py-2" key={j}>
                         {names.length > 1 && <Label>{name}</Label>}
                         <ul className="list-disc">
-                            {diets[name][i].map((d,k) => <li key={k}>{d}</li>)}
+                            {diets[name][i].filter(d => d.trim()).map((d,k) => <li key={k}>{d}</li>)}
                         </ul>
                         </div>
                     )

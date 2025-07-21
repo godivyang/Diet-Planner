@@ -81,9 +81,9 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
 
   return (
     <div>
-      <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full">
+      {buttonText && <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full">
         {buttonText}
-      </Button>
+      </Button>}
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
         <ul
           style={{
@@ -99,7 +99,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
             onKeyDown={handleKeyDown}
             placeholder="Enter diet here..."
             spellCheck={false}
-            className="px-2 text-lg touch-none select-text outline-none"
+            className="px-2 text-2xl font-bold touch-none select-text outline-none max-h-[30vh] overflow-y-scroll list-disc pl-6 overflow-x-hidden"
           />
         </ul>
       </Slate>

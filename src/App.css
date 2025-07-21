@@ -132,7 +132,7 @@ html.disable-transitions *::after {
     @apply border-border outline-ring;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-2xl;
   }
   input, textarea, select {
     @apply outline-none ring-0 focus-visible:outline-none focus-visible:ring-0;

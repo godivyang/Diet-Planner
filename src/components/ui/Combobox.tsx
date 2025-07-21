@@ -30,7 +30,7 @@ export function Combobox({data, onChange}) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min justify-between">
+        <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min justify-between text-2xl">
           {selected.length ? selected.join(", ") : "Select names..."}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -55,6 +55,7 @@ export function Combobox({data, onChange}) {
                     setSelected([...selected]);
                     // setOpen(false)
                   }}
+                  className="text-2xl"
                 >
                   <CheckIcon
                     className={cn(

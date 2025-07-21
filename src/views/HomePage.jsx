@@ -46,15 +46,15 @@ const HomePage = () => {
 
     return (
         <>
-            {!addNewNameVisible && <Button onClick={() => setAddNewNameVisible(true)}>Add new name</Button>}
+            {!addNewNameVisible && <Button onClick={() => setAddNewNameVisible(true)} className="text-2xl m-2">Add new name</Button>}
             {!addNewNameVisible && <Card className="m-2">
                 <CardContent className="flex flex-col gap-1">
-                    <Combobox data={allNames} onChange={(selected) => setNames(selected)} />
-                    <Calendar28 onChange={(date) => setDate(date)} />
-                    <Button onClick={goToDietEntry}>Next</Button>
+                    <Combobox data={allNames} onChange={(selected) => setNames(selected)}/>
+                    <Calendar28 onChange={(date) => setDate(date)} className=" text-2xl"/>
+                    <Button onClick={goToDietEntry} className="text-2xl">Next</Button>
                 </CardContent>
             </Card>}
-            {addNewNameVisible && <Card className="m-2 p-2">
+            {addNewNameVisible && <Card className="m-2">
                 <CardTitle className="flex gap-2 items-center">
                     {!!allNames.length &&
                     <Button variant="outline" onClick={() => setAddNewNameVisible(false)} >
@@ -62,9 +62,9 @@ const HomePage = () => {
                     </Button>}
                     Add a new name
                 </CardTitle>
-                <CardContent className="flex flex-col gap-2">
-                    <Input onChange={(e) => setNewName(e.target.value)}></Input>
-                    <Button onClick={addNewName}>Add name</Button>
+                <CardContent className="flex flex-col gap-2 w-full">
+                    <Input onChange={(e) => setNewName(e.target.value)} className="text-2xl my-4" placeholder="Add new name here..."></Input>
+                    {newName && <Button onClick={addNewName}>Add name</Button>}
                     {!!allNames.length && <>
                         <Label className="font-bold">All names:</Label>
                         <ul>

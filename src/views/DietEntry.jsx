@@ -35,22 +35,24 @@ const DietEntry = () => {
 
     useEffect(() => {
         // console.log(location.state)
+        let flag = false;
         if (localStorage.getItem("Diet-Planner-Diet")) {
             let d = JSON.parse(localStorage.getItem("Diet-Planner-Diet"));
             // console.log(d, names)
             if (names.length && Object.keys(d).length && names.every(name => Object.keys(d).includes(name))) {
                 setDiets(d);
-                return;
+                flag = true;
             }
         }
-        for (let name of names) {
-            diets[name] = Array.from({ length: data.length }, () => [""]);
+        if(!flag) {
+            for (let name of names) {
+                diets[name] = Array.from({ length: data.length }, () => [""]);
+            }
+            setDiets({ ...diets });
         }
-        
         getSuggestions().then(data => {
             setSuggestions([...data]);
-        })
-        setDiets({ ...diets });
+        });
     }, []);
 
     useEffect(() => {
@@ -103,13 +105,14 @@ const DietEntry = () => {
                     <Card className="items-center bg-primary-foreground max-h-[70vh] overflow-x">
                         <CardTitle className="flex items-center w-full gap-2 px-2">
                             <Button variant="outline" onClick={onBackButtonClick}><ArrowLeft/></Button>
-                            {item.title}
-                            <span className="flex-1"></span>
-                            {item.time}
+                            <div className="flex flex-col">
+                                <span className="text-2xl">{item.title}</span>
+                                <span className="text-lg">{item.time}</span>
+                            </div>
                         </CardTitle>
                         <CardContent className="flex flex-col gap-2 w-full p-2 overflow-y-auto">
                             {names.map((name, j) => (<div key={j} className="gap-2 flex flex-col w-full">
-                                <Label>{name}</Label>
+                                <Label className="text-2xl">{name}</Label>
                                 {diets[name] &&
                                 <UnorderedListEditor onListChange={(val) => onDietChange(val, name, i)}
                                     initialValue={diets[name][i].map(val => ({
