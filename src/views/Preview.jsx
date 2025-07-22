@@ -76,7 +76,7 @@ const Preview = () => {
         setCopiedSuccessfully(true);
         
         navigator.clipboard.writeText(clipboardText);
-        console.log(clipboardText);
+        // console.log(clipboardText);
     }
 
     return <div className="w-full">

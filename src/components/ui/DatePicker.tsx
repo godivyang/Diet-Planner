@@ -47,7 +47,7 @@ export function Calendar28() {
           id="date"
           value={value}
           placeholder={new Date().toDateString()}
-          className="bg-secondary pr-10"
+          className="bg-secondary pr-10 text-2xl font-bold h-14"
           onChange={(e) => {
             const date = new Date(e.target.value)
             setValue(e.target.value)

@@ -30,14 +30,16 @@ export function Combobox({data, onChange}) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min justify-between text-2xl">
-          {selected.length ? selected.join(", ") : "Select names..."}
+        <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min h-full justify-between text-2xl py-4">
+          <div className="flex flex-col">
+          {selected.length ? selected.map((name, i) => <span key={i}>{name}</span>) : <span className="text-muted-foreground">Select names...</span>}
+          </div>
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="min-w-min p-0">
         <Command>
-          <CommandInput placeholder="Search name..." />
+          <CommandInput placeholder="Search name..." className="text-2xl"/>
           <CommandList>
             <CommandEmpty>No name found.</CommandEmpty>
             <CommandGroup>
@@ -46,7 +48,7 @@ export function Combobox({data, onChange}) {
                   key={d._id}
                   value={d.name}
                   onSelect={(currentValue) => {
-                    console.log(currentValue)
+                    // console.log(currentValue)
                     if(selected.includes(currentValue)) {
                       selected.splice(selected.indexOf(currentValue), 1);
                     } else {

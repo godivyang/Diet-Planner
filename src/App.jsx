@@ -19,6 +19,8 @@ const App = () => {
             localStorage.setItem("DietPlanner-Login-Tries", "fresh");
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
+        } else if (loginTriesFlag === "fresh") {
+
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             alert("SSO LOGIN FAILED!");
