@@ -4,11 +4,13 @@
 
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap")
 
 @custom-variant dark (&:is(.dark *));
 
 body {
   margin: 0;
+  font-family: "Lexend Deca",system-ui;
 }
 
 html.disable-transitions *, 

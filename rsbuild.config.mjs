@@ -1,13 +1,26 @@
-import { defineConfig, loadEnv } from '@rsbuild/core';
+import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+// for .env variables
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+const envVars = {};
+for (const key in process.env) {
+  if (key.startsWith('REACT_APP_')) {
+    envVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+  }
+}
 
 export default defineConfig({
   source: {
     define: {
-      ...publicVars
+      ...envVars
     },
     publicDir: 'public',
+  },
+  server: {
+    port: 3002,
   },
   plugins: [pluginReact()],
   html: {

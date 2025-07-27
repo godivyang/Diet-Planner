@@ -42,7 +42,7 @@ const LandingPage = ({ userName }) => {
         <div className="flex w-full p-1">
             <H1 text="Diet Planner" />
             <span className="flex-1"/>
-            {userName && <Button className="text-lg">{userName}</Button>}
+            {userName && <Button className="text-lg bg-cyan-500 font-bold">{userName}</Button>}
             <Button variant="outline" onClick={changeTheme} size="icon">
                 {theme === "dark" ? <Sun/> : <Moon/>}
             </Button>

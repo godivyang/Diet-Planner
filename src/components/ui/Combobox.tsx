@@ -42,7 +42,7 @@ export function Combobox({data, onChange}) {
           <CommandInput placeholder="Search name..." className="text-2xl"/>
           <CommandList>
             <CommandEmpty>No name found.</CommandEmpty>
-            <CommandGroup>
+            <CommandGroup className="flex flex-col">
               {data.map((d) => (
                 <CommandItem
                   key={d._id}

@@ -53,7 +53,9 @@ const App = () => {
             </Route>
         </Routes>
         :
-        <div>Please wait while we are logging you in...</div>
+        <div className='m-4 p-4 rounded bg-primary text-white font-bold'>
+            Please wait while we are logging you in...
+        </div>
     );
 };
 

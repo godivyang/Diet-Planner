@@ -76,20 +76,6 @@ const DietEntry = () => {
         setDiets({ ...diets });
     }
 
-    const formatDiet = (val) => {
-        const edited = val.split("\n").map(row => {
-            if (row === "•") {
-                row = "";
-            } else if (row[0] === "•") {
-                if (row[1] !== " ") row = row.replace("•", "• ").trim();
-            } else {
-                row = "• " + row.trim();
-            }
-            return row;
-        }).filter(row => row.length > 0).join("\n");
-        return edited;
-    }
-
     const onSubmit = () => {
         navigate("/preview", { state: { diets, names, date } });
     }
@@ -102,17 +88,19 @@ const DietEntry = () => {
         <Carousel className="flex w-full flex-col justify-center p-2" setApi={setApi}>
             <CarouselContent>
                 {data.map((item, i) => (<CarouselItem key={i}>
-                    <Card className="items-center bg-primary-foreground max-h-[70vh] overflow-x">
-                        <CardTitle className="flex items-center w-full gap-2 px-2">
-                            <Button variant="outline" onClick={onBackButtonClick}><ArrowLeft/></Button>
+                    <Card className="items-center bg-cyan-500 max-h-[70vh] overflow-x">
+                        <CardTitle className="flex items-center w-[90%] gap-2 px-2 bg-yellow-500 rounded">
+                            <Button variant="outline" onClick={onBackButtonClick} className="border-0">
+                                <ArrowLeft/>
+                            </Button>
                             <div className="flex flex-col">
-                                <span className="text-2xl">{item.title}</span>
+                                <span className="text-2xl font-black">{item.title}</span>
                                 <span className="text-lg">{item.time}</span>
                             </div>
                         </CardTitle>
                         <CardContent className="flex flex-col gap-2 w-full p-2 overflow-y-auto">
                             {names.map((name, j) => (<div key={j} className="gap-2 flex flex-col w-full">
-                                <Label className="text-2xl">{name}</Label>
+                                <Label className="text-2xl font-black text-yellow-200">{name}</Label>
                                 {diets[name] &&
                                 <UnorderedListEditor onListChange={(val) => onDietChange(val, name, i)}
                                     initialValue={diets[name][i].map(val => ({
@@ -131,7 +119,7 @@ const DietEntry = () => {
                 <CarouselPrevious />
                 <CarouselNext />
                 <span className="flex-1"></span>
-                {page === data.length && <Button onClick={onSubmit}>Done</Button>}
+                {page === data.length && <Button onClick={onSubmit} className="font-black">Done</Button>}
             </div>
         </Carousel>
         : undefined

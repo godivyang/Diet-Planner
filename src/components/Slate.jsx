@@ -93,6 +93,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
             minHeight: '100px',
             listStyleType: 'disc'
           }}
+          className="bg-background"
         >
           <Editable
             renderElement={renderElement}

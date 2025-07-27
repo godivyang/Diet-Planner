@@ -83,7 +83,7 @@ const Preview = () => {
     <Card className="m-2">
         <CardTitle>
             <div className="mx-2 flex gap-2">
-                <Button variant="outline" onClick={onBackButtonClick}><ArrowLeft/></Button>
+                <Button variant="outline" onClick={onBackButtonClick} className="border-0"><ArrowLeft/></Button>
                 <Label className="text-2xl font-bold">Diet Preview</Label>
             </div>
         </CardTitle>
@@ -124,7 +124,7 @@ const Preview = () => {
             })}
         </CardContent>
         <CardFooter>
-            <Button onClick={onCopyButtonClick}>
+            <Button onClick={onCopyButtonClick} className="font-black">
                 {copiedSuccessfully && <Check className="mx-2"/>} Copy Diet
             </Button>
         </CardFooter>
