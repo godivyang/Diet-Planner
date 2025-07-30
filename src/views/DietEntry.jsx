@@ -88,8 +88,8 @@ const DietEntry = () => {
         <Carousel className="flex w-full flex-col justify-center p-2" setApi={setApi}>
             <CarouselContent>
                 {data.map((item, i) => (<CarouselItem key={i}>
-                    <Card className="items-center bg-cyan-500 max-h-[70vh] overflow-x">
-                        <CardTitle className="flex items-center w-[90%] gap-2 px-2 bg-yellow-500 rounded">
+                    <Card className="items-center bg-cyan-500/50 max-h-[70vh] overflow-x">
+                        <CardTitle className="flex items-center w-[90%] gap-2 px-2 bg-yellow-400 rounded">
                             <Button variant="outline" onClick={onBackButtonClick} className="border-0">
                                 <ArrowLeft/>
                             </Button>
@@ -100,7 +100,7 @@ const DietEntry = () => {
                         </CardTitle>
                         <CardContent className="flex flex-col gap-2 w-full p-2 overflow-y-auto">
                             {names.map((name, j) => (<div key={j} className="gap-2 flex flex-col w-full">
-                                <Label className="text-2xl font-black text-yellow-200">{name}</Label>
+                                <Label className="text-2xl font-black text-yellow-400">{name}</Label>
                                 {diets[name] &&
                                 <UnorderedListEditor onListChange={(val) => onDietChange(val, name, i)}
                                     initialValue={diets[name][i].map(val => ({

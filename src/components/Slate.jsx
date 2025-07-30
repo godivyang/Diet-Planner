@@ -81,7 +81,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
 
   return (
     <div>
-      {buttonText && <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full">
+      {buttonText && <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full text-2xl">
         {buttonText}
       </Button>}
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
