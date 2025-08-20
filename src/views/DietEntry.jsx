@@ -85,11 +85,11 @@ const DietEntry = () => {
     }
 
     return (diets && Object.keys(diets).length) ?
-        <Carousel className="flex w-full flex-col justify-center p-2" setApi={setApi}>
-            <CarouselContent>
-                {data.map((item, i) => (<CarouselItem key={i}>
-                    <Card className="items-center bg-cyan-500/50 max-h-[70vh] overflow-x">
-                        <CardTitle className="flex items-center w-[90%] gap-2 px-2 bg-yellow-400 rounded">
+        <Carousel className="flex w-full flex-col justify-center p-2 flex-1 overflow-y-auto" setApi={setApi}>
+            <CarouselContent className="h-full">
+                {data.map((item, i) => (<CarouselItem key={i} className="overflow-y-auto h-full">
+                    <Card className="items-center bg-black/80 border-4 border-cyan-400">
+                        <CardTitle className="flex items-center text-black w-[90%] gap-2 px-2 bg-cyan-400 rounded">
                             <Button variant="outline" onClick={onBackButtonClick} className="border-0">
                                 <ArrowLeft/>
                             </Button>
@@ -98,9 +98,9 @@ const DietEntry = () => {
                                 <span className="text-lg">{item.time}</span>
                             </div>
                         </CardTitle>
-                        <CardContent className="flex flex-col gap-2 w-full p-2 overflow-y-auto">
+                        <CardContent className="flex flex-col gap-2 w-full p-2">
                             {names.map((name, j) => (<div key={j} className="gap-2 flex flex-col w-full">
-                                <Label className="text-2xl font-black text-yellow-400">{name}</Label>
+                                <Label className="text-2xl font-black text-cyan-400">{name}</Label>
                                 {diets[name] &&
                                 <UnorderedListEditor onListChange={(val) => onDietChange(val, name, i)}
                                     initialValue={diets[name][i].map(val => ({

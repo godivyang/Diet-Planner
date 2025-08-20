@@ -2,22 +2,13 @@
 
 import * as React from "react"
 import { Calendar1 } from "lucide-react"
-
 import { Button } from "./Button"
 import { Calendar } from "./Calendar"
 import { Input } from "./Input"
-import { Label } from "./Label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./Popover"
+import { Popover, PopoverContent, PopoverTrigger } from "./Popover"
 
 function formatDate(date: Date | undefined) {
-  if (!date) {
-    return ""
-  }
-
+  if (!date) return ""
   return date.toLocaleDateString("en-US", {
     day: "2-digit",
     month: "long",
@@ -26,17 +17,29 @@ function formatDate(date: Date | undefined) {
 }
 
 function isValidDate(date: Date | undefined) {
-  if (!date) {
-    return false
-  }
+  if (!date) return false
   return !isNaN(date.getTime())
 }
 
-export function Calendar28() {
+export function Calendar28({
+  date: controlledDate,
+  onDateChange,
+}: {
+  date?: Date
+  onDateChange?: (date: Date | undefined) => void
+}) {
   const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date()
-  )
+  const [uncontrolledDate, setUncontrolledDate] = React.useState<Date | undefined>(new Date())
+
+  const date = controlledDate ?? uncontrolledDate
+  const setDate = (d: Date | undefined) => {
+    if (onDateChange) {
+      onDateChange(d)
+    } else {
+      setUncontrolledDate(d)
+    }
+  }
+
   const [month, setMonth] = React.useState<Date | undefined>(date)
   const [value, setValue] = React.useState(formatDate(date))
 
@@ -49,11 +52,11 @@ export function Calendar28() {
           placeholder={new Date().toDateString()}
           className="bg-secondary pr-10 text-2xl font-bold h-14"
           onChange={(e) => {
-            const date = new Date(e.target.value)
+            const d = new Date(e.target.value)
             setValue(e.target.value)
-            if (isValidDate(date)) {
-              setDate(date)
-              setMonth(date)
+            if (isValidDate(d)) {
+              setDate(d)
+              setMonth(d)
             }
           }}
           onKeyDown={(e) => {
@@ -70,7 +73,7 @@ export function Calendar28() {
               variant="ghost"
               className="absolute top-1/2 right-2 size-6 p-0 -translate-y-1/2"
             >
-              <Calendar1 className="h-full w-full"/>
+              <Calendar1 className="h-full w-full" />
               <span className="sr-only">Select date</span>
             </Button>
           </PopoverTrigger>
@@ -86,9 +89,9 @@ export function Calendar28() {
               captionLayout="dropdown"
               month={month}
               onMonthChange={setMonth}
-              onSelect={(date) => {
-                setDate(date)
-                setValue(formatDate(date))
+              onSelect={(d) => {
+                setDate(d)
+                setValue(formatDate(d))
                 setOpen(false)
               }}
             />

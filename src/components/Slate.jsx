@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
-import { Slate, Editable, withReact } from 'slate-react';
+import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 import { createEditor, Transforms, Node, Editor, Element as SlateElement } from 'slate';
 import { Button } from "../components/ui/Button"
 import Fuse from "fuse.js"
@@ -11,6 +11,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
 
   const [value, setValue] = useState(initialValue);
   const [buttonText, setButtonText] = useState((suggestions[0]||{}).description);
+  const [editorActive, setEditorActive] = useState(false);
 
   const renderElement = useCallback(({ element, attributes, children }) => {
     switch (element.type) {
@@ -81,7 +82,8 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
 
   return (
     <div>
-      {buttonText && <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full text-2xl">
+      {buttonText && editorActive && 
+      <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full text-2xl">
         {buttonText}
       </Button>}
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
@@ -96,11 +98,13 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
           className="bg-background"
         >
           <Editable
+            onFocus={() => setEditorActive(true)}
+            onBlur={() => setEditorActive(false)}
             renderElement={renderElement}
             onKeyDown={handleKeyDown}
             placeholder="Enter diet here..."
             spellCheck={false}
-            className="px-2 text-2xl font-bold touch-none select-text outline-none max-h-[30vh] overflow-y-scroll list-disc pl-6 overflow-x-hidden"
+            className="px-2 text-2xl font-bold touch-none select-text outline-none overflow-y-scroll list-disc pl-6 overflow-x-hidden"
           />
         </ul>
       </Slate>

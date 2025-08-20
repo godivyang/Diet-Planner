@@ -32,7 +32,7 @@ export function Combobox({data, onChange}) {
       <PopoverTrigger asChild>
         <Button variant="secondary" role="combobox" aria-expanded={open} className="min-w-min h-full justify-between text-2xl py-4">
           <div className="flex flex-col">
-          {selected.length ? selected.map((name, i) => <span key={i}>{name}</span>) : <span className="text-muted-foreground">Select names...</span>}
+          {selected.length ? selected.map((name, i) => <span key={i} className="text-left font-bold text-cyan-500">{name}</span>) : <span className="text-muted-foreground">Select names...</span>}
           </div>
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

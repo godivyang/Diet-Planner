@@ -51,11 +51,11 @@ const LandingPage = ({ userName }) => {
             alt="Background GIF"
             className="absolute top-0 left-0 w-screen h-screen object-cover"
         />
-        <div className="z-10 w-full">
+        <div className="flex flex-col z-10 w-full h-full">
         <div className="flex w-full p-1">
             <H1 text="Diet Planner" />
             <span className="flex-1"/>
-            {userName && <Button className="text-lg bg-cyan-500 font-bold">{userName}</Button>}
+            {userName && <Button className="text-lg bg-cyan-400 font-bold">{userName}</Button>}
             <Button variant="outline" onClick={changeTheme} size="icon">
                 {theme === "dark" ? <Sun/> : <Moon/>}
             </Button>

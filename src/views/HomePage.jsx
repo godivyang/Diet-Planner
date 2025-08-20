@@ -50,15 +50,15 @@ const HomePage = () => {
         <div className="flex w-full">
           <Button onClick={() => setAddNewNameVisible(true)} className="text-2xl m-2" variant="Outline"><Plus />&nbsp;Name</Button>
         </div>}
-      {!addNewNameVisible && <Card className="m-8 bg-cyan-500/50 font-bold">
+      {!addNewNameVisible && <Card className="m-8 bg-black/80 font-bold border-4 border-cyan-400">
         <CardContent className="flex flex-col gap-2">
           <Combobox data={allNames} onChange={(selected) => setNames(selected)} />
-          <Calendar28 onChange={(date) => setDate(date)} className=" text-2xl" />
+          <Calendar28 date={date} onDateChange={setDate} className=" text-2xl" />
           {!!names.length &&
-            <Button onClick={goToDietEntry} className="text-2xl mt-10">Next</Button>}
+            <Button onClick={goToDietEntry} className="text-2xl mt-10 font-black">Next</Button>}
         </CardContent>
       </Card>}
-      {addNewNameVisible && !!allNames.length && <Card className="m-2 bg-cyan-500/50 text-yellow-200 h-[80vh] flex flex-col">
+      {addNewNameVisible && !!allNames.length && <Card className="m-2 bg-cyan-400/50 text-yellow-200 h-[80vh] flex flex-col">
         <CardTitle className="flex gap-2 items-center m-2 bg-yellow-500 text-primary rounded font-black">
           {!!allNames.length &&
             <Button variant="outline" onClick={() => setAddNewNameVisible(false)} className="border-0">
