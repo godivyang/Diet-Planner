@@ -30,26 +30,30 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
     onListChange(items);
   };
 
-  const handleUpdateCurrentItem = () => {
-    const { selection } = editor;
-  if (!selection) return;
+  const handleUpdateCurrentItem = (e) => {
+    e?.preventDefault();
+    const [match] = Editor.nodes(editor, {
+      match: (n) =>
+        !Editor.isEditor(n) &&
+        SlateElement.isElement(n) &&
+        n.type === 'list-item',
+    });
 
-  const [match] = Editor.nodes(editor, {
-    match: (n) =>
-      !Editor.isEditor(n) &&
-      SlateElement.isElement(n) &&
-      n.type === 'list-item',
-  });
+    if (match) {
+      const [node, path] = match;
 
-  if (match) {
-    const [node, path] = match;
+      // Remove the existing children (text) and insert new text
+      const textPath = [...path, 0]; // Path to the text node inside list-item
 
-    // Remove the existing children (text) and insert new text
-    const textPath = [...path, 0]; // Path to the text node inside list-item
+      Transforms.delete(editor, { at: textPath });
+      Transforms.insertText(editor, buttonText, { at: textPath });
 
-    Transforms.delete(editor, { at: textPath });
-    Transforms.insertText(editor, buttonText, { at: textPath });
-  }
+      // Move selection to end of that path
+      Transforms.select(editor, Editor.end(editor, textPath))
+
+      // Refocus editor
+      ReactEditor.focus(editor)
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -83,7 +87,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
   return (
     <div>
       {buttonText && editorActive && 
-      <Button onClick={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full text-2xl">
+      <Button onMouseDown={handleUpdateCurrentItem} size="sm" className="p-2 mb-2 max-w-[70vw] h-full text-2xl">
         {buttonText}
       </Button>}
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
@@ -98,10 +102,11 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
           className="bg-background"
         >
           <Editable
+            renderElement={renderElement}
             onFocus={() => setEditorActive(true)}
             onBlur={() => setEditorActive(false)}
-            renderElement={renderElement}
             onKeyDown={handleKeyDown}
+            onClick={handleKeyDown}
             placeholder="Enter diet here..."
             spellCheck={false}
             className="px-2 text-2xl font-bold touch-none select-text outline-none overflow-y-scroll list-disc pl-6 overflow-x-hidden"
