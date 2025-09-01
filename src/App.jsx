@@ -6,9 +6,12 @@ import DietEntry from './views/DietEntry';
 import Preview from "./views/Preview";
 import { useEffect, useState } from 'react';
 import { checkIfLogin } from './api/DietPlanner';
+import { Button } from './components/ui/Button';
+import { RefreshCcw } from 'lucide-react';
 
 const App = () => {
     const [userName, setUserName] = useState("");
+    const [loginFailed, setLoginFailed] = useState(false);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -20,9 +23,10 @@ const App = () => {
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
         } else if (loginTriesFlag === "fresh") {
-
+            return;
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
+            setLoginFailed(true);
             alert("SSO LOGIN FAILED!");
             // showBusyIndicator(false);
             return;
@@ -37,12 +41,17 @@ const App = () => {
                 localStorage.setItem("DietPlanner-Login-Tries", "tried");
             } else {
                 localStorage.removeItem("DietPlanner-Login-Tries");
-                alert("SSO LOGIN FAILED!");
+                // alert("SSO LOGIN FAILED!");
+                setLoginFailed(true);
             }
         }).then(() => {
             // showBusyIndicator(false);
         });
-    }, [])
+    }, []);
+
+    const refreshPage = () => {
+        window.location.href = process.env.REACT_APP_DIET_PLANNER_URL;
+    }
 
     return (userName ? 
         <Routes>
@@ -53,9 +62,17 @@ const App = () => {
             </Route>
         </Routes>
         :
-        <div className='m-4 p-4 rounded bg-primary text-white font-bold'>
-            Please wait while we are logging you in...
+        <>
+        <div className='m-4 gap-2 text-white font-bold flex flex-col'>
+            <span className="bg-primary rounded p-4">
+                Please wait while we are logging you in...
+            </span>
+            {loginFailed &&
+            <Button className="w-fit" onClick={refreshPage}>
+                <RefreshCcw className="mr-2"/>Refresh</Button>
+            }
         </div>
+        </>
     );
 };
 

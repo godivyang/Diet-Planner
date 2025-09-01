@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 const checkIfLogin = async (code) => {
     try {
         const response = await axiosInstance.post("/user/me", { code });
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error({"message": e.error});
     }
@@ -19,7 +19,7 @@ const checkIfLogin = async (code) => {
 export const addDiet = async (description) => {
     try {
         const response = await axiosInstance.post(`/diets`, { description });
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error(e);
     }
@@ -28,7 +28,7 @@ export const addDiet = async (description) => {
 export const getSuggestions = async () => {
     try {
         const response = await axiosInstance.get(`/suggestions`);
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error(e);
     }
@@ -37,7 +37,7 @@ export const getSuggestions = async () => {
 export const getNames = async () => {
     try {
         const response = await axiosInstance.get(`/names`);
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error(e);
     }
@@ -46,7 +46,7 @@ export const getNames = async () => {
 export const addName = async (name) => {
     try {
         const response = await axiosInstance.post(`/names`, { name });
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error(e);
     }
@@ -55,7 +55,7 @@ export const addName = async (name) => {
 export const removeName = async (_id) => {
     try {
         const response = await axiosInstance.delete(`/names/${_id}`);
-        return response.data;
+        return response.data.data;
     } catch (e) {
         throw new Error(e);
     }
