@@ -6,7 +6,7 @@ import { Outlet, useNavigate } from "react-router";
 
 const LandingPage = ({ userName }) => {
     const [theme, setTheme] = useState("");
-    const [bgGif, setBgGif] = useState("");
+    const [bgGif, setBgGif] = useState(null);
 
     useEffect(() => {
         let userTheme = localStorage.getItem("userTheme");
