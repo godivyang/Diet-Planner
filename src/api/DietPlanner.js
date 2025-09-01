@@ -12,7 +12,7 @@ const checkIfLogin = async (code) => {
         const response = await axiosInstance.post("/user/me", { code });
         return response.data.data;
     } catch (e) {
-        console.log(e)
+        alert(e.details.message)
         throw new Error({"message": e.details.message});
     }
 };
