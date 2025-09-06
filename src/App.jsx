@@ -23,7 +23,7 @@ const App = () => {
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
         } else if (loginTriesFlag === "fresh") {
-            return;
+            // return;
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setLoginFailed(true);
