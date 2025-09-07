@@ -12,18 +12,21 @@ import { RefreshCcw } from 'lucide-react';
 const App = () => {
     const [userName, setUserName] = useState("");
     const [loginFailed, setLoginFailed] = useState(false);
+    const [waitingTime, setWaitingTime] = useState(0);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
         let loginTriesFlag = localStorage.getItem("DietPlanner-Login-Tries");
+        let timer;
         if (!loginTriesFlag) {
             localStorage.setItem("DietPlanner-Login-Tries", "fresh");
+            timer = setInterval(() => setWaitingTime(waitingTime + 1), 1000);
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
         } else if (loginTriesFlag === "fresh") {
-            // return;
+            return;
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setLoginFailed(true);
@@ -45,6 +48,7 @@ const App = () => {
                 setLoginFailed(true);
             }
         }).then(() => {
+            clearInterval(timer);
             // showBusyIndicator(false);
         });
     }, []);
@@ -67,6 +71,7 @@ const App = () => {
             <span className="bg-primary rounded p-4">
                 Please wait while we are logging you in...
             </span>
+            {waitingTime && `Please wait while the system is getting started: ${waitingTime}`}
             {loginFailed &&
             <Button className="w-fit" onClick={refreshPage}>
                 <RefreshCcw className="mr-2"/>Refresh</Button>
