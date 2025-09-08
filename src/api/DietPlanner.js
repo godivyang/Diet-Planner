@@ -7,6 +7,10 @@ const axiosInstance = axios.create({
     withCredentials: true
 });
 
+export const wakeUltimateUtility = async () => {
+    await axios.create({baseURL: "https://ult-userauth.onrender.com/"}).get("/");
+}
+
 const checkIfLogin = async (code) => {
     try {
         const response = await axiosInstance.post("/user/me", { code });

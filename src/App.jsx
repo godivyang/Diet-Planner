@@ -5,7 +5,7 @@ import HomePage from './views/HomePage';
 import DietEntry from './views/DietEntry';
 import Preview from "./views/Preview";
 import { useEffect, useState } from 'react';
-import { checkIfLogin } from './api/DietPlanner';
+import { checkIfLogin, wakeUltimateUtility } from './api/DietPlanner';
 import { Button } from './components/ui/Button';
 import { RefreshCcw } from 'lucide-react';
 
@@ -19,10 +19,13 @@ const App = () => {
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
         let loginTriesFlag = localStorage.getItem("DietPlanner-Login-Tries");
-        let timer;
+        let timer, time = 0;
         if (!loginTriesFlag) {
             localStorage.setItem("DietPlanner-Login-Tries", "fresh");
-            timer = setInterval(() => setWaitingTime(waitingTime + 1), 1000);
+            timer = setInterval(() => {
+                time++;
+                setWaitingTime(time);
+            }, 1000);
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
         } else if (loginTriesFlag === "fresh") {
@@ -30,10 +33,11 @@ const App = () => {
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setLoginFailed(true);
-            alert("SSO LOGIN FAILED!");
+            // alert("SSO LOGIN FAILED!");
             // showBusyIndicator(false);
             return;
         }
+        wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setUserName(userName);
@@ -70,8 +74,9 @@ const App = () => {
         <div className='m-4 gap-2 text-white font-bold flex flex-col'>
             <span className="bg-primary rounded p-4">
                 Please wait while we are logging you in...
+                <br/>
+                {!!waitingTime && `Waiting time: ${waitingTime}s`}
             </span>
-            {waitingTime && `Please wait while the system is getting started: ${waitingTime}`}
             {loginFailed &&
             <Button className="w-fit" onClick={refreshPage}>
                 <RefreshCcw className="mr-2"/>Refresh</Button>
