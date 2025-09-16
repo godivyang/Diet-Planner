@@ -29,7 +29,7 @@ const App = () => {
         } else if (loginTriesFlag === "tried") {
             localStorage.setItem("DietPlanner-Login-Tries", "final");
         } else if (loginTriesFlag === "fresh") {
-            return;
+        
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setLoginFailed(true);
@@ -37,6 +37,7 @@ const App = () => {
             // showBusyIndicator(false);
             return;
         }
+        return;
         wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
             localStorage.removeItem("DietPlanner-Login-Tries");
@@ -71,11 +72,27 @@ const App = () => {
         </Routes>
         :
         <>
-        <div className='m-4 gap-2 text-white font-bold flex flex-col'>
-            <span className="bg-primary rounded p-4">
-                Please wait while we are logging you in...
+        <div className='m-4 gap-2 text-black text-sm font-bold flex flex-col'>
+            <span className="custom-background rounded p-6">
+                <span>
+                    Welcome to 
+                    <br/>
+                    <span className='font-black text-white text-5xl'>Diet Planner</span>
+                </span>
                 <br/>
-                {!!waitingTime && `Waiting time: ${waitingTime}s`}
+                <br/>
+                Please wait while we are authenticating you...
+                <br/>
+                <span className='text-sm text-black'>
+                {!!waitingTime && 
+                <div className='bg-cyan-400 p-2 w-fit mt-2 rounded'>
+                    Waiting time: 
+                    <br/>
+                    <span className='text-4xl text-white font-black'>{waitingTime}s</span>
+                    <br />
+                    expect &lt;60s
+                </div>}
+                </span>
             </span>
             {loginFailed &&
             <Button className="w-fit" onClick={refreshPage}>
