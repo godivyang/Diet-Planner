@@ -37,7 +37,6 @@ const App = () => {
             // showBusyIndicator(false);
             return;
         }
-        return;
         wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
             localStorage.removeItem("DietPlanner-Login-Tries");
