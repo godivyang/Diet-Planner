@@ -40,16 +40,7 @@ const App = () => {
             // showBusyIndicator(false);
             return;
         }
-return;
-        // if(lastLoginTime && new Date().getTime() - lastLoginTime > 2) {
-        //     localStorage.removeItem("DietPlanner-Login-LastTime");
-        //     setLoginFailed(true);
-        //     clearInterval(timer);
-        //     return;
-        // } else {
-        //     localStorage.setItem("DietPlanner-Login-LastTime", new Date().getTime());
-        // }
-
+        
         wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
             localStorage.removeItem("DietPlanner-Login-Tries");
