@@ -51,7 +51,7 @@ const LandingPage = ({ userName }) => {
             alt="Background GIF"
             className="absolute top-0 left-0 w-screen h-screen object-cover"
         />
-        <div className="flex flex-col z-10 w-full h-full">
+        <div className="flex flex-col z-10 w-full h-full items-center">
         <div className="flex w-full p-1">
             <H1 text="Diet Planner" />
             <span className="flex-1"/>

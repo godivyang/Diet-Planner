@@ -3,7 +3,7 @@ import { Button } from "../components/ui/Button";
 import { Textarea } from "../components/ui/Textarea";
 import UnorderedListEditor from "../components/Slate";
 import { generateImages, generateKeywordTitle } from "../api/DietPlanner";
-import { Download, Sparkle } from "lucide-react";
+import { AlignLeft, Download, List, Sparkle } from "lucide-react";
 
 import * as htmlToImage from 'html-to-image';
 // import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
@@ -21,26 +21,34 @@ const sampleImages = [
 
 const palette = [
     ["#fdf0d5","#c1121f","#003049"],
-    ["#e5e5e5","#000000","#fca311"],
-    ["#ebeb7f","#386641","#25aa00"],
+    ["#ffffff","#000000","#d90429"],
+    ["#b2ff9e","#3c1642","#086375"],
     ["#ffd500","#00296b","#00509d"]
 ]
 
 const Post = ({url="",title="",content="",palette=["#000","#fff","#fff"],name="",designation=""}) => {
+    const calculateFontSize = (length) => {
+        console.log(length)
+        if(length < 150) return "text-4xl";
+        else if(length < 300) return "text-2xl";
+        else if(length < 450) return "text-xl";
+        return "text-lg";
+    }
+
     return <div id="my-post" className="flex p-[10%] items-center w-full aspect-[4/5] bg-cover bg-center relative overflow-hidden border-4 border-primary" style={{ backgroundColor: url ? undefined : "black", backgroundImage: url ? `url(${url})` : undefined, borderColor: palette[2] }}>
         {title && <div className="absolute top-2 left-0 h-fit bg-orange-500 flex flex-col p-1 px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
-            <span className="text-4xl py-2">{title}</span>
+            <span className="text-2xl py-2">{title}</span>
         </div>}
-        <div className="h-fit w-full rounded flex justify-center flex-col p-[5%]" style={{background: palette[0]+"C0", color: palette[2]}}>
-            <span className="flex flex-col text-4xl">
+        <div className="h-max-[90%] h-fit w-full rounded flex justify-center flex-col p-[5%]" style={{background: palette[0]+"C0", color: palette[2]}}>
+            <span lang="en" className={`h-full flex flex-col gap-2 ${calculateFontSize(content.toString().length)}`}>
             {typeof content === "object" ? content.map(line => <span>
                 {line}
             </span>) : content}</span>
         </div>
         {(name || designation) &&
         <div className="absolute bottom-2 right-0 h-fit flex flex-col p-1 px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
-            {name && <span className="text-xl">{name}</span>}
-            {designation && <span className="text-xs">{designation}</span>}
+            {name && <span className="text-2xl">{name}</span>}
+            {designation && <span className="text-sm">{designation}</span>}
         </div>}
 
     </div>
@@ -91,16 +99,20 @@ const MakePost = () => {
             document.body.removeChild(a);
         });
     }
+    const isContentOfValidLength = () => {
+        return ((contType === 0 && textPost.length > 15) || (contType === 1 && listPost.toString().length > 20));
+    }
 
-    return (<div className="max-w-[500px] flex flex-col p-2 items-center gap-2 overflow-auto text-lg font-bold m-2 border-4 border-cyan-400 bg-background rounded">
-        <div className="rounded flex justify-center items-center p-2 w-full max-w-[500px] gap-2">
+    return (<div className="max-w-[600px] w-full flex flex-col p-2 items-center gap-2 overflow-auto text-lg font-bold m-2 border-4 border-cyan-400 bg-background rounded">
+        <div className="rounded flex p-2 w-full max-w-[500px] gap-2 flex-col">
             <span>Content Type:</span>
-            <span className="flex-1 gap-2 flex">
-            <Button className="w-[50%] font-bold" variant={contType === 0 ? "default" : "outline"} onClick={() => setContType(0)}>Text</Button>
-            <Button className="w-[50%] font-bold" variant={contType === 1 ? "default" : "outline"} onClick={() => setContType(1)}>List</Button>
+            <span className="flex-1 gap-2 flex w-full">
+            <Button className="w-[50%] font-bold text-xl" variant={contType === 0 ? "default" : "outline"} onClick={() => setContType(0)}><AlignLeft/>&nbsp;Text</Button>
+            <Button className="w-[50%] font-bold text-xl" variant={contType === 1 ? "default" : "outline"} onClick={() => setContType(1)}><List/>&nbsp;List</Button>
             </span>
         </div>
-        <div className="rounded p-2 w-full max-w-[500px]">
+        <div className="rounded p-2 w-full max-w-[500px] gap-2 flex flex-col">
+            Content:
             {contType === 0 ? <Textarea className="bg-background text-2xl" value={textPost} placeholder="Enter post here..." onChange={(e) => setTextPost(e.target.value)}/> : 
             <UnorderedListEditor className="w-full" 
             initialValue={listPost.map(val => ({
@@ -108,13 +120,15 @@ const MakePost = () => {
                 children: [{ text: val }]
             }))} onListChange={(val) => setListPost(val)}/>}
         </div>
-        <div className="flex justify-center w-fit items-center p-2 w-full max-w-[500px] flex-col gap-2">
+        <div className="flex w-fit p-2 w-full max-w-[500px] flex-col gap-2">
+            Heading:
             <input className="w-full bg-background border-4 border-cyan-400 rounded p-2 text-xl" maxLength={20} value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Enter Title..."/>
-            {(textPost.length > 15 || listPost.toString().length > 20) &&
+            {isContentOfValidLength() && keyword.length === 0 &&
             <Button onClick={getTitle} className="w-full text-xl"><Sparkle/>&nbsp;Generate</Button>}
         </div>
         {keyword &&
-        <div className="rounded flex justify-center items-center p-2 w-full max-w-[500px]">
+        <div className="gap-2 flex p-2 w-full max-w-[500px] flex-col">
+            Images:
             <div className="flex gap-2 w-full overflow-auto">
                 {images.length === 0 ? <Button onClick={getImagesGenerated} className="w-full text-xl"><Sparkle/>&nbsp;Generate Images</Button> :
                 images.map((imageURL, i) => <div className={`w-20 h-25 flex-shrink-0 bg-gray-200 flex items-center justify-center overflow-hidden ${urlSelected===i?"border-4 border-cyan-400":""} cursor-pointer`} key={i+"-urlKey"} onClick={()=>setURLSelected(i)}>
@@ -122,24 +136,24 @@ const MakePost = () => {
                 </div>)}
             </div>
         </div>}
-        {(textPost.length > 15 || listPost.toString().length > 20) &&
-        <div className="rounded flex justify-center items-center p-2 w-full max-w-[500px] gap-2">
-            <span>Select Palette:</span>
+        {isContentOfValidLength() &&
+        <div className="rounded flex p-2 w-full max-w-[500px] gap-2 flex-col">
+            <span>Colour Scheme:</span>
             <div className="flex gap-2 flex-wrap">
             {palette.map((arr,i) => <span key={i+"-palette"} className={`flex w-fit border-4 ${paletteSelected === i && "border-cyan-400"} rounded box-border`} onClick={()=>setPaletteSelected(i)}>
                 {arr.map((color,j) => <span key={j+"-color"} className={`aspect-square h-7 max-h-10 max-w-10 inline-block`} style={{background: color}}></span>)}
             </span>)}
             </div>
         </div>}
-        <div className="rounded flex justify-center items-left p-2 w-full max-w-[500px] gap-2 flex-col">
+        <div className="flex p-2 w-full max-w-[500px] gap-2 flex-col">
             <span className="items-begin">Name:</span>
             <input placeholder="Enter name..." className="w-full bg-background border-4 border-cyan-400 rounded p-2 text-xl" maxLength={20} value={name} onChange={e=>setName(e.target.value)}/>
         </div>
-        <div className="rounded flex justify-center items-left p-2 w-full max-w-[500px] gap-2 flex-col">
+        <div className="flex p-2 w-full max-w-[500px] gap-2 flex-col">
             <span>Designation:</span>
             <input placeholder="Enter designation..." className="w-full bg-background border-4 border-cyan-400 rounded p-2 text-xl" maxLength={30} value={designation} onChange={(e)=>setDesignation(e.target.value)}/>
         </div>
-        {(textPost.length > 15 || listPost.toString().length > 20) &&
+        {isContentOfValidLength() &&
         <>
         <div className="rounded flex justify-center items-center p-2 w-full flex-col">
             <Post url={images.length && images[urlSelected]} title={title} content={contType === 0 ? textPost : listPost.filter((line,i) => line.trim()).map((line,i) => "• "+line)} palette={palette[paletteSelected]} name={name} designation={designation}/>

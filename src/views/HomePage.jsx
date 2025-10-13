@@ -53,7 +53,7 @@ const HomePage = () => {
       {!addNewNameVisible &&
         <div className="flex w-full justify-between">
           <Button onClick={() => setAddNewNameVisible(true)} className="text-2xl m-2" variant="Outline"><Plus />&nbsp;Name</Button>
-          <Button onClick={() => goToMakePost()} className="text-2xl m-2 bg-cyan-400"><Sparkles/>&nbsp;Make Post</Button>
+          <Button onClick={() => goToMakePost()} className="text-xl font-bold m-2 bg-cyan-400"><Sparkles/>&nbsp;Make Post</Button>
         </div>}
       {!addNewNameVisible && <Card className="m-8 bg-black/80 font-bold border-4 border-cyan-400 max-w-[500px]">
         <CardContent className="flex flex-col gap-2">

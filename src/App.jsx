@@ -20,7 +20,7 @@ const App = () => {
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
         let loginTriesFlag = localStorage.getItem("DietPlanner-Login-Tries");
-        let lastLoginTime = localStorage.getItem("DietPlanner-Login-LastTime");
+        // let lastLoginTime = localStorage.getItem("DietPlanner-Login-LastTime");
         let timer, time = 0;
         if (!loginTriesFlag) {
             localStorage.setItem("DietPlanner-Login-Tries", "fresh");
@@ -40,15 +40,15 @@ const App = () => {
             // showBusyIndicator(false);
             return;
         }
-
-        if(lastLoginTime && new Date().getTime() - lastLoginTime > 2) {
-            localStorage.removeItem("DietPlanner-Login-LastTime");
-            setLoginFailed(true);
-            clearInterval(timer);
-            return;
-        } else {
-            localStorage.setItem("DietPlanner-Login-LastTime", new Date().getTime());
-        }
+return;
+        // if(lastLoginTime && new Date().getTime() - lastLoginTime > 2) {
+        //     localStorage.removeItem("DietPlanner-Login-LastTime");
+        //     setLoginFailed(true);
+        //     clearInterval(timer);
+        //     return;
+        // } else {
+        //     localStorage.setItem("DietPlanner-Login-LastTime", new Date().getTime());
+        // }
 
         wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
@@ -85,23 +85,23 @@ const App = () => {
         </Routes>
         :
         <>
-        <div className='m-4 gap-2 text-black text-sm font-bold flex flex-col'>
-            <span className="custom-background rounded p-6">
+        <div className='m-4 gap-2 text-blue-900 font-bold flex flex-col w-fit'>
+            <span className="custom-background rounded p-6 text-xl">
                 <span>
                     Welcome to 
                     <br/>
-                    <span className='font-black text-white text-5xl'>Diet Planner</span>
+                    <span className='font-black text-white text-6xl'>Diet Planner</span>
                 </span>
                 <br/>
                 <br/>
                 Please wait while we are authenticating you...
                 <br/>
-                <span className='text-sm text-black'>
+                <span className='text-xl'>
                 {!!waitingTime && 
                 <div className='bg-cyan-400 p-2 w-fit mt-2 rounded'>
                     Waiting time: 
                     <br/>
-                    <span className='text-4xl text-white font-black'>{waitingTime}s</span>
+                    <span className='text-5xl text-white font-black'>{waitingTime}s</span>
                     <br />
                     expect &lt;60s
                 </div>}
