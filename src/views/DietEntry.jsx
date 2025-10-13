@@ -107,7 +107,7 @@ const DietEntry = () => {
                                         type: 'list-item',
                                         children: [{ text: val }]
                                     }))}
-                                    suggestions={suggestions} />
+                                    suggestions={suggestions} placeholder="Enter diet here..."/>
                                 }
                             </div>))}
                         </CardContent>

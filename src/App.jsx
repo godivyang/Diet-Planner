@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { checkIfLogin, wakeUltimateUtility } from './api/DietPlanner';
 import { Button } from './components/ui/Button';
 import { RefreshCcw } from 'lucide-react';
+import MakePost from './views/MakePost';
 
 const App = () => {
     const [userName, setUserName] = useState("");
@@ -19,6 +20,7 @@ const App = () => {
         const code = urlParams.get("code");
         // showBusyIndicator(true, "Please wait, you are getting authenticated.");
         let loginTriesFlag = localStorage.getItem("DietPlanner-Login-Tries");
+        let lastLoginTime = localStorage.getItem("DietPlanner-Login-LastTime");
         let timer, time = 0;
         if (!loginTriesFlag) {
             localStorage.setItem("DietPlanner-Login-Tries", "fresh");
@@ -33,10 +35,21 @@ const App = () => {
         } else {
             localStorage.removeItem("DietPlanner-Login-Tries");
             setLoginFailed(true);
+            clearInterval(timer);
             // alert("SSO LOGIN FAILED!");
             // showBusyIndicator(false);
             return;
         }
+
+        if(lastLoginTime && new Date().getTime() - lastLoginTime > 2) {
+            localStorage.removeItem("DietPlanner-Login-LastTime");
+            setLoginFailed(true);
+            clearInterval(timer);
+            return;
+        } else {
+            localStorage.setItem("DietPlanner-Login-LastTime", new Date().getTime());
+        }
+
         wakeUltimateUtility();
         checkIfLogin(code).then((userName) => {
             localStorage.removeItem("DietPlanner-Login-Tries");
@@ -67,6 +80,7 @@ const App = () => {
                 <Route index element={<HomePage />} />
                 <Route path="diet" element={<DietEntry />} />
                 <Route path="preview" element={<Preview />} />
+                <Route path="post" element={<MakePost />} />
             </Route>
         </Routes>
         :

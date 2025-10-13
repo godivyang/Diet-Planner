@@ -7,7 +7,7 @@ import { Button } from "../components/ui/Button";
 import { addName, getNames, removeName } from "../api/DietPlanner";
 import { Input } from "../components/ui/Input";
 import { Label } from "@radix-ui/react-label";
-import { ArrowLeft, Delete, DeleteIcon, Plus, Trash, X } from "lucide-react";
+import { ArrowLeft, Delete, DeleteIcon, Plus, Sparkles, Trash, X } from "lucide-react";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -31,6 +31,10 @@ const HomePage = () => {
     if (names.length) navigate("diet", { state: { names, date } });
   };
 
+  const goToMakePost = () => {
+    navigate("post");
+  };
+
   const addNewName = () => {
     if (newName) addName(newName).then(data => setAllNames([...data]));
     setNewName("");
@@ -42,15 +46,16 @@ const HomePage = () => {
 
   const deleteName = (_id) => {
     removeName(_id).then(data => setAllNames([...data]));
-  }
+  };
 
   return (
     <>
       {!addNewNameVisible &&
-        <div className="flex w-full">
+        <div className="flex w-full justify-between">
           <Button onClick={() => setAddNewNameVisible(true)} className="text-2xl m-2" variant="Outline"><Plus />&nbsp;Name</Button>
+          <Button onClick={() => goToMakePost()} className="text-2xl m-2 bg-cyan-400"><Sparkles/>&nbsp;Make Post</Button>
         </div>}
-      {!addNewNameVisible && <Card className="m-8 bg-black/80 font-bold border-4 border-cyan-400">
+      {!addNewNameVisible && <Card className="m-8 bg-black/80 font-bold border-4 border-cyan-400 max-w-[500px]">
         <CardContent className="flex flex-col gap-2">
           <Combobox data={allNames} onChange={(selected) => setNames(selected)} />
           <Calendar28 date={date} onDateChange={setDate} className=" text-2xl" />

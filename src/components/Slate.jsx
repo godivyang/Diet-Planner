@@ -4,7 +4,13 @@ import { createEditor, Transforms, Node, Editor, Element as SlateElement } from 
 import { Button } from "../components/ui/Button"
 import Fuse from "fuse.js"
 
-const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}] }) => {
+const UnorderedListEditor = ({ 
+    initialValue=[{type: 'list-item', 
+    children: [{ text: "" }]}], 
+    onListChange=()=>{}, 
+    suggestions=[{}],
+    placeholder="Enter Text here..."
+  }) => {
   const fuse = new Fuse(suggestions, { keys: ["description"] });
   
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -107,7 +113,7 @@ const UnorderedListEditor = ({ initialValue=[""], onListChange, suggestions=[{}]
             onBlur={() => setEditorActive(false)}
             onKeyDown={handleKeyDown}
             onClick={handleKeyDown}
-            placeholder="Enter diet here..."
+            placeholder={placeholder}
             spellCheck={false}
             className="px-2 text-2xl font-bold touch-none select-text outline-none overflow-y-scroll list-disc pl-6 overflow-x-hidden"
           />

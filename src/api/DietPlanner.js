@@ -66,4 +66,31 @@ export const removeName = async (_id) => {
     }
 }
 
+export const generateImages = async (query="") => {
+    try {
+        const response = await axiosInstance.post(`/generate/images`, { query });
+        return response.data.data;
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
+export const generateTitle = async (query="") => {
+    try {
+        const response = await axiosInstance.post(`/generate/images`, { query });
+        return response.data.data;
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
+export const generateKeywordTitle = async (query="") => {
+    try {
+        const response = await axiosInstance.post(`/generate/keyword_title`, { query });
+        return response.data.data;
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
 export { checkIfLogin };
