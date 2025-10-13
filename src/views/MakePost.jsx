@@ -8,11 +8,16 @@ import { Download, Sparkle } from "lucide-react";
 import * as htmlToImage from 'html-to-image';
 // import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
-const sampleImages = ["https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixid=M3w4MTU1MTZ8MHwxfHNlYXJjaHwxfHxhcHBsZXxlbnwwfHx8fDE3NjAyODM3MjZ8MA&ixlib=rb-4.1.0"
-,"https://images.unsplash.com/photo-1630563451961-ac2ff27616ab?ixid=M3w4MTU1MTZ8MHwxfHNlYXJjaHwyfHxhcHBsZXxlbnwwfHx8fDE3NjAyODM3MjZ8MA&ixlib=rb-4.1.0"
-,"https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixid=M3w4MTU1MTZ8MHwxfHNlYXJjaHwzfHxhcHBsZXxlbnwwfHx8fDE3NjAyODM3MjZ8MA&ixlib=rb-4.1.0"
-,"https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixid=M3w4MTU1MTZ8MHwxfHNlYXJjaHw0fHxhcHBsZXxlbnwwfHx8fDE3NjAyODM3MjZ8MA&ixlib=rb-4.1.0"
-,"https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?ixid=M3w4MTU1MTZ8MHwxfHNlYXJjaHw1fHxhcHBsZXxlbnwwfHx8fDE3NjAyODM3MjZ8MA&ixlib=rb-4.1.0"];
+const sampleImages = [
+    "https://images.unsplash.com/photo-1502082553048-f009c37129b9",
+    "https://images.unsplash.com/photo-1495567720989-cebdbdd97913",
+    "https://images.unsplash.com/photo-1503264116251-35a269479413",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    "https://images.unsplash.com/photo-1518837695005-2083093ee35b",
+    "https://images.unsplash.com/photo-1470225620780-dba8ba36b745",
+    "https://images.unsplash.com/photo-1503602642458-232111445657",
+    "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
+    "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368"];
 
 const palette = [
     ["#fdf0d5","#c1121f","#003049"],
@@ -54,13 +59,23 @@ const MakePost = () => {
     const [designation, setDesignation] = useState("");
 
     const getImagesGenerated = () => {
-        generateImages(keyword).then(images => setImages(images));
+        if(!keyword) {
+            let post = "Title: " + title + "\nContent: \n" + contType === 0 ? textPost : listPost.filter((line) => line.trim()).join("\n");
+            generateKeywordTitle(post).then(data => {
+                setKeyWord(data.keyword);
+                generateImages(data.keyword).then(images => {
+                    setImages([...images, ...sampleImages]);
+                });
+            })
+        } else {
+            generateImages(keyword).then(images => setImages([...images, ...sampleImages]));
+        }
     }
     const getTitle = () => {
         if(!confirm("Are you sure you want to generate the title?")) return;
         generateKeywordTitle(contType === 0 ? textPost : listPost.filter((line) => line.trim()).join("\n")).then((data) => {
-            console.log(data);
-            setTitle(data.title);
+            // console.log(data);
+            if(!title) setTitle(data.title);
             setKeyWord(data.keyword);
         });
     }
@@ -93,11 +108,11 @@ const MakePost = () => {
                 children: [{ text: val }]
             }))} onListChange={(val) => setListPost(val)}/>}
         </div>
-        {(textPost.length > 15 || listPost.toString().length > 20) &&
-        <div className="flex justify-center w-fit items-center p-2 w-full max-w-[500px]">
-            {title ? <span>{title}</span> : 
-            <Button onClick={getTitle} className="w-full text-xl"><Sparkle/>&nbsp;Generate Title</Button>}
-        </div>}
+        <div className="flex justify-center w-fit items-center p-2 w-full max-w-[500px] flex-col gap-2">
+            <input className="w-full bg-background border-4 border-cyan-400 rounded p-2 text-xl" maxLength={20} value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Enter Title..."/>
+            {(textPost.length > 15 || listPost.toString().length > 20) &&
+            <Button onClick={getTitle} className="w-full text-xl"><Sparkle/>&nbsp;Generate</Button>}
+        </div>
         {keyword &&
         <div className="rounded flex justify-center items-center p-2 w-full max-w-[500px]">
             <div className="flex gap-2 w-full overflow-auto">
