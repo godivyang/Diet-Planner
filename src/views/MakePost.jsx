@@ -28,16 +28,20 @@ const palette = [
 
 const Post = ({url="",title="",content="",palette=["#000","#fff","#fff"],name="",designation=""}) => {
     const calculateFontSize = (length) => {
-        console.log(length)
-        if(length < 150) return "text-4xl";
-        else if(length < 300) return "text-2xl";
-        else if(length < 450) return "text-xl";
-        return "text-lg";
+        if(typeof content === "object") length += content.length * 10;
+        if(length < 50) return "text-4xl";
+        else if(length < 100) return "text-3xl";
+        else if(length < 150) return "text-2xl";
+        else if(length < 200) return "text-xl";
+        else if(length < 250) return "text-lg";
+        else if(length < 300) return "text-md";
+        else if(length < 350) return "text-sm";
+        return "text-xs";
     }
 
-    return <div id="my-post" className="flex p-[10%] items-center w-full aspect-[4/5] bg-cover bg-center relative overflow-hidden border-4 border-primary" style={{ backgroundColor: url ? undefined : "black", backgroundImage: url ? `url(${url})` : undefined, borderColor: palette[2] }}>
-        {title && <div className="absolute top-2 left-0 h-fit bg-orange-500 flex flex-col p-1 px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
-            <span className="text-2xl py-2">{title}</span>
+    return <div id="my-post" className="flex p-[10%] items-center w-full aspect-[4/5] bg-cover bg-center relative overflow-hidden border-[5px] border-primary rounded" style={{ backgroundColor: url ? undefined : "black", backgroundImage: url ? `url(${url})` : undefined, borderColor: palette[0] }}>
+        {title && <div className="absolute top-2 left-0 h-fit bg-orange-500 flex flex-col px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
+            <span className="text-2xl">{title}</span>
         </div>}
         <div className="h-max-[90%] h-fit w-full rounded flex justify-center flex-col p-[5%]" style={{background: palette[0]+"C0", color: palette[2]}}>
             <span lang="en" className={`h-full flex flex-col gap-2 ${calculateFontSize(content.toString().length)}`}>
@@ -46,7 +50,7 @@ const Post = ({url="",title="",content="",palette=["#000","#fff","#fff"],name=""
             </span>) : content}</span>
         </div>
         {(name || designation) &&
-        <div className="absolute bottom-2 right-0 h-fit flex flex-col p-1 px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
+        <div className="absolute bottom-2 right-0 h-fit flex flex-col px-4 rounded items-end shadow-sm" style={{background: palette[1], color: palette[0]}}>
             {name && <span className="text-2xl">{name}</span>}
             {designation && <span className="text-sm">{designation}</span>}
         </div>}
