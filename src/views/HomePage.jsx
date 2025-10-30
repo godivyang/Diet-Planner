@@ -63,9 +63,9 @@ const HomePage = () => {
             <Button onClick={goToDietEntry} className="text-2xl mt-10 font-black">Next</Button>}
         </CardContent>
       </Card>}
-      {addNewNameVisible && !allNames.length && <Card className="h-[90vh] w-full max-w-[500px] flex flex-col border-4 border-cyan-400 bg-black/80">
+      {addNewNameVisible && <Card className="h-[90vh] w-full max-w-[500px] flex flex-col border-4 border-cyan-400 bg-black/80">
         <CardTitle className="flex gap-2 items-center m-2 p-2 bg-cyan-400 text-black rounded font-black">
-          {!allNames.length &&
+          {!!allNames.length &&
             <Button variant="outline" onClick={() => setAddNewNameVisible(false)} className="border-0">
               <ArrowLeft />
             </Button>}
