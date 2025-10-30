@@ -15,51 +15,56 @@ const App = () => {
     const [loginFailed, setLoginFailed] = useState(false);
     const [waitingTime, setWaitingTime] = useState(0);
 
+    const address = "DietPlanner-Login-Tries";
+    const appName = "DIET_PLANNER";
+    const appURL = process.env.REACT_APP_DIET_PLANNER_URL;
+
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get("code");
-        // showBusyIndicator(true, "Please wait, you are getting authenticated.");
-        let loginTriesFlag = localStorage.getItem("DietPlanner-Login-Tries");
-        // let lastLoginTime = localStorage.getItem("DietPlanner-Login-LastTime");
-        let timer, time = 0;
+
+        const code = (new URLSearchParams(window.location.search)).get("code");
+        let loginTriesFlag = localStorage.getItem(address),
+            timer, time = 0;
         if (!loginTriesFlag) {
-            localStorage.setItem("DietPlanner-Login-Tries", "fresh");
+            localStorage.setItem(address, "fresh");
             timer = setInterval(() => {
                 time++;
                 setWaitingTime(time);
             }, 1000);
         } else if (loginTriesFlag === "tried") {
-            localStorage.setItem("DietPlanner-Login-Tries", "final");
+            localStorage.setItem(address, "final");
         } else if (loginTriesFlag === "fresh") {
-        
+            // times when user refreshes manually
         } else {
-            localStorage.removeItem("DietPlanner-Login-Tries");
+            localStorage.removeItem(address);
             setLoginFailed(true);
             clearInterval(timer);
             // alert("SSO LOGIN FAILED!");
-            // showBusyIndicator(false);
             return;
         }
         
         wakeUltimateUtility();
+        checkLogin(code, timer);
+        
+    }, []);
+
+    const checkLogin = (code, timer) => {
         checkIfLogin(code).then((userName) => {
-            localStorage.removeItem("DietPlanner-Login-Tries");
+            localStorage.removeItem(address);
             setUserName(userName);
-            if (code) window.location.href = process.env.REACT_APP_DIET_PLANNER_URL;
+            if (code) window.location.href = appURL;
         }).catch((e) => {
-            if (localStorage.getItem("DietPlanner-Login-Tries") === "fresh") {
-                window.location.href = process.env.REACT_APP_ULTIMATE_UTILITY_URL + "?redirect=DIET_PLANNER";
-                localStorage.setItem("DietPlanner-Login-Tries", "tried");
+            if (localStorage.getItem(address) === "fresh") {
+                window.location.href = process.env.REACT_APP_ULTIMATE_UTILITY_URL + "?redirect=" + appName;
+                localStorage.setItem(address, "tried");
             } else {
-                localStorage.removeItem("DietPlanner-Login-Tries");
+                localStorage.removeItem(address);
                 // alert("SSO LOGIN FAILED!");
                 setLoginFailed(true);
             }
         }).then(() => {
             clearInterval(timer);
-            // showBusyIndicator(false);
         });
-    }, []);
+    };
 
     const refreshPage = () => {
         window.location.href = process.env.REACT_APP_DIET_PLANNER_URL;

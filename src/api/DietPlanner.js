@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 });
 
 export const wakeUltimateUtility = async () => {
-    await axios.create({baseURL: "https://ult-userauth.onrender.com/"}).get("/");
+    await axiosInstance.get("/user/wakeUltUtl");
 }
 
 const checkIfLogin = async (code) => {

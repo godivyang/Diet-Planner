@@ -63,8 +63,8 @@ const HomePage = () => {
             <Button onClick={goToDietEntry} className="text-2xl mt-10 font-black">Next</Button>}
         </CardContent>
       </Card>}
-      {addNewNameVisible && !!allNames.length && <Card className="m-2 bg-cyan-400/50 text-yellow-200 h-[80vh] flex flex-col">
-        <CardTitle className="flex gap-2 items-center m-2 bg-yellow-500 text-primary rounded font-black">
+      {addNewNameVisible && !!allNames.length && <Card className="h-[90vh] w-full max-w-[500px] flex flex-col border-4 border-cyan-400 bg-black/80">
+        <CardTitle className="flex gap-2 items-center m-2 p-2 bg-cyan-400 text-black rounded font-black">
           {!!allNames.length &&
             <Button variant="outline" onClick={() => setAddNewNameVisible(false)} className="border-0">
               <ArrowLeft />
@@ -72,7 +72,7 @@ const HomePage = () => {
           Add a new name
         </CardTitle>
 
-        <CardContent className="flex flex-col gap-2 min-w-[80vw] flex-1 min-h-0">
+        <CardContent className="flex flex-col gap-2 w-full flex-1 min-h-0">
           <Input
             onChange={(e) => setNewName(e.target.value)}
             className="text-2xl my-2 bg-background font-bold h-20"
@@ -89,7 +89,7 @@ const HomePage = () => {
               <Label className="font-bold">All names:</Label>
               <ul className="flex-1 overflow-y-auto min-h-0">
                 {allNames.map(name => (
-                  <Card key={name._id} className="m-2">
+                  <Card key={name._id} className="m-2 border-2 border-cyan-400">
                     <CardContent className="w-full flex items-center font-bold">
                       {name.name}
                       <span className="flex-1"></span>
