@@ -82,24 +82,20 @@ const App = () => {
         :
         <>
         <div className='m-4 gap-2 text-blue-900 font-bold flex flex-col w-fit'>
-            <span className="custom-background rounded p-6 text-xl">
+            <span className="custom-background rounded p-6 text-lg">
                 <span>
-                    Welcome to 
-                    <br/>
+                    <div>Welcome to</div>
                     <span className='font-black text-white text-6xl'>Diet Planner</span>
                 </span>
-                <br/>
-                <br/>
-                Please wait while we are authenticating you...
-                <br/>
-                <span className='text-xl'>
+                <div className="my-2">
+                    Please wait while we are authenticating you...
+                </div>
+                <span>
                 {!!waitingTime && 
                 <div className='bg-cyan-400 p-2 w-fit mt-2 rounded'>
-                    Waiting time: 
-                    <br/>
+                    <div>Waiting time: </div>
                     <span className='text-5xl text-white font-black'>{waitingTime}s</span>
-                    <br />
-                    expect &lt;60s
+                    <div>expect &lt;60s</div>
                 </div>}
                 </span>
             </span>

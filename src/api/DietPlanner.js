@@ -7,18 +7,24 @@ const axiosInstance = axios.create({
     withCredentials: true
 });
 
+// const wait = (time=1000, res) => {
+//     setTimeout(async () => res(), time);
+// }
+
 export const wakeUltimateUtility = async () => {
     await axiosInstance.get("/user/wakeUltUtl");
 }
 
 const checkIfLogin = async (code) => {
+    // return new Promise((res, rej) => wait(3500, res)).then(async () => {
     try {
         const response = await axiosInstance.post("/user/me", { code });
         return response.data.data;
     } catch (e) {
         // alert(e.toString())
-        throw new Error({"message": e.details.message});
+        throw new Error(e.response.data.details.message);
     }
+    // });
 };
 
 export const addDiet = async (description) => {
