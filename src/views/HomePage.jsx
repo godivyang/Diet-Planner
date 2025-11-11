@@ -84,12 +84,12 @@ const HomePage = () => {
             </Button>
           )}
 
-          {!allNames.length && (
+          {allNames.length > 0 && (
             <div className="flex flex-col flex-1 min-h-0">
               <Label className="font-bold">All names:</Label>
               <ul className="flex-1 overflow-y-auto min-h-0">
                 {allNames.map(name => (
-                  <Card key={name._id} className="m-2 border-2 border-cyan-400">
+                  <Card key={name._id} className="my-2 border-2 border-cyan-400">
                     <CardContent className="w-full flex items-center font-bold">
                       {name.name}
                       <span className="flex-1"></span>
